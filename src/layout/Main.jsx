@@ -14,14 +14,22 @@ class Main extends Component {
   componentDidMount() {
     fetch(`https://omdbapi.com?apikey=${APY_KEY}&s=matrix`)
       .then((response) => response.json())
-      .then((data) => this.setState({ movies: data.Search, loading: false }));
+      .then((data) => this.setState({ movies: data.Search, loading: false }))
+      .catch((err) => {
+        console.error(err);
+        this.setState({ loading: false });
+      });
   }
 
   searchMovies = (str, type = 'all') => {
     this.setState({ loading: true });
     fetch(`https://omdbapi.com?apikey=${APY_KEY}&s=${str}${type !== 'all' ? `&type=${type}` : ''}`)
       .then((response) => response.json())
-      .then((data) => this.setState({ movies: data.Search, loading: false }));
+      .then((data) => this.setState({ movies: data.Search, loading: false }))
+      .catch((err) => {
+        console.error(err);
+        this.setState({ loading: false });
+      });
   };
 
   render() {
